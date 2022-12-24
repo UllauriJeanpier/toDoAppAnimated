@@ -11,11 +11,8 @@ const ThemeToggle = () => {
       <Text>Dark</Text>
       <Switch isChecked={colorMode === 'light'} onToggle={toggleColorMode}></Switch>
       <Text>Light</Text>
-      
-    </HStack> 
+    </HStack>
   )
 }
 
 export default ThemeToggle
-
-const styles = StyleSheet.create({})

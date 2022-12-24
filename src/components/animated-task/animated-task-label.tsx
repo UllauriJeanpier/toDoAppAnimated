@@ -26,8 +26,9 @@ const AnimatedTaskLabel = (props: Props) => {
   } = props
 
   const {
-    hStackAnimatedStyle, 
-    textColorAnimatedStyles
+    hStackAnimatedStyle,
+    textColorAnimatedStyles,
+    strikethroughAnimatedStyle
   } = useAnimatedTask({
     textColor,
     inactiveTextColor,
@@ -38,11 +39,20 @@ const AnimatedTaskLabel = (props: Props) => {
   return (
     <Pressable onPress={onPress}>
       <AnimatedHStack alignItems='center' style={[hStackAnimatedStyle]} >
-        <AnimatedText fontSize={19} noOfLines={1} isTruncated px={1} style={[textColorAnimatedStyles]}>
+        <AnimatedText
+          fontSize={19}
+          noOfLines={1}
+          isTruncated px={1}
+          style={[textColorAnimatedStyles]}
+        >
           {children}
-
         </AnimatedText>
-        <AnimatedBox position='absolute' h={1} borderBottomWidth={1} ></AnimatedBox>
+        <AnimatedBox
+          position='absolute'
+          h={1}
+          borderBottomWidth={1}
+          style={[strikethroughAnimatedStyle]}
+        />
       </AnimatedHStack>
     </Pressable>
   )

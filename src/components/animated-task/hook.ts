@@ -42,6 +42,19 @@ export const useAnimatedTask = (props: Props) => {
     [strikethrough, textColor, inactiveTextColor]
   )
 
+  const strikethroughWidth = useSharedValue(0)
+  const strikethroughAnimatedStyle = useAnimatedStyle(
+    () => ({
+      width: `${strikethroughWidth.value * 100}%`,
+      borderBottomColor: interpolateColor(
+        textColorProgress.value,
+        [0, 1],
+        [textColor, inactiveTextColor]
+      )
+    }),
+    [strikethrough, textColor, inactiveTextColor]
+  )
+
   useEffect(() => {
     const easing = Easing.out(Easing.quad)
     if (strikethrough) {
@@ -55,6 +68,10 @@ export const useAnimatedTask = (props: Props) => {
           easing
         })
       )
+      strikethroughWidth.value = withTiming(1, {
+        duration: 400,
+        easing
+      })
       textColorProgress.value = withDelay(
         1000,
         withTiming(1, {
@@ -66,11 +83,16 @@ export const useAnimatedTask = (props: Props) => {
         duration: 400,
         easing
       })
+      strikethroughWidth.value = withTiming(0, {
+        duration: 400,
+        easing
+      })
     }
   }, [strikethrough])
 
   return {
     hStackAnimatedStyle,
-    textColorAnimatedStyles
+    textColorAnimatedStyles,
+    strikethroughAnimatedStyle
   }
 }
