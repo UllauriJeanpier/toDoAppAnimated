@@ -2,9 +2,11 @@ import React, { useCallback, useState } from 'react'
 import { Box, Center, Text, VStack, useColorModeValue, Fab, Icon } from "native-base";
 import ThemeToggle from '../components/theme-toggle';
 import { AntDesign } from '@expo/vector-icons';
+import AnimatedColorBox from '../components/animated-color-box';
 import TaskItem from '../components/animated-task/task-item';
 
 import TaskList, { TaskItemData } from '../components/task-list';
+import Header from '../components/header';
 
 const initialData: TaskItemData[] = [
   {
@@ -72,48 +74,54 @@ const MainScreen = () => {
 
 
   return (
-    <Center _dark={{ bg: 'blueGray.900' }} _light={{ bg: 'blueGray.50' }} px={4} flex={1} >
-      <VStack space={5} alignItems='center' w='full' >
-        <TaskList
-          data={data}
-          editingItemId={editingItemId}
-          onToggleItem={handleToggleTaskItem}
-          onChangeSubject={handleChangeTaskItemSubject}
-          onFinishEditing={handleFinishEditingTaskItem}
-          onPressLabel={handlePressTaskItemLabel}
-          onRemoveItem={handleRemoveItem}
-        />
-        <ThemeToggle />
-      </VStack>
-      <Fab
-        position='absolute'
-        renderInPortal={false}
-        size='sm'
-        icon={
-          <Icon
-            color='white'
-            as={<AntDesign name='plus' />}
-            size='sm'
+    <AnimatedColorBox
+      flex={1}
+      bg={useColorModeValue('warmGray.50', 'primary.900')}
+      w='full'
+    >
+      <Header title='Your tasks list' >
+        <VStack space={5} alignItems='center' w='full' >
+          <TaskList
+            data={data}
+            editingItemId={editingItemId}
+            onToggleItem={handleToggleTaskItem}
+            onChangeSubject={handleChangeTaskItemSubject}
+            onFinishEditing={handleFinishEditingTaskItem}
+            onPressLabel={handlePressTaskItemLabel}
+            onRemoveItem={handleRemoveItem}
           />
-        }
-        colorScheme={useColorModeValue('blue', 'darkBlue')}
-        bg={useColorModeValue('blue.500', 'blue.400')}
-        onPress={() => {
-          const id = Math.random().toString(36).substring(7)
-          setData(prevData => {
-            return [
-              {
-                id,
-                subject: '',
-                done: false
-              },
-              ...prevData,
-            ]
-          })
-          setEditingItemId(id)
-        }}
-      />
-    </Center>
+          <ThemeToggle />
+        </VStack>
+      </Header>
+      <Fab
+          position='absolute'
+          renderInPortal={false}
+          size='sm'
+          icon={
+            <Icon
+              color='white'
+              as={<AntDesign name='plus' />}
+              size='sm'
+            />
+          }
+          colorScheme={useColorModeValue('blue', 'darkBlue')}
+          bg={useColorModeValue('blue.500', 'blue.400')}
+          onPress={() => {
+            const id = Math.random().toString(36).substring(7)
+            setData(prevData => {
+              return [
+                {
+                  id,
+                  subject: '',
+                  done: false
+                },
+                ...prevData,
+              ]
+            })
+            setEditingItemId(id)
+          }}
+        />
+    </AnimatedColorBox>
   )
 }
 
